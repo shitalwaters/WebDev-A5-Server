@@ -1,0 +1,9 @@
+# Dependency directories
+node_modules/
+
+# IDE - Visual Studio
+.vs/
+.vscode/
+*.user
+*.suo
+*.userprefs
