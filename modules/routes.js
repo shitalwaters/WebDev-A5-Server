@@ -1,12 +1,12 @@
-import db from "../Database/index.js";
+import Database from "../Database/index.js";
 
 function ModuleRoutes(app) {
 
     // GET all modules in a course
     app.get("/api/courses/:cid/modules", (req, res) => {
         const { cid } = req.params;
-        // console.log(JSON.stringify(db.modules))
-        const modules = db.modules
+        // console.log(JSON.stringify(Database.modules))
+        const modules = Database.modules
             .filter((m) => m.course === cid);
         res.send(modules);
     });
@@ -19,24 +19,24 @@ function ModuleRoutes(app) {
             course: cid,
             _id: new Date().getTime().toString(),
         };
-        db.modules.push(newModule);
+        Database.modules.push(newModule);
         res.send(newModule);
     });
 
     // DELETE module
     app.delete("/api/modules/:mid", (req, res) => {
         const { mid } = req.params;
-        db.modules = db.modules.filter((m) => m._id !== mid);
+        Database.modules = Database.modules.filter((m) => m._id !== mid);
         res.sendStatus(200);
     });
 
     // PUT update a module
     app.put("/api/modules/:mid", (req, res) => {
         const { mid } = req.params;
-        const moduleIndex = db.modules.findIndex(
+        const moduleIndex = Database.modules.findIndex(
             (m) => m._id === mid);
-        db.modules[moduleIndex] = {
-            ...db.modules[moduleIndex],
+            Database.modules[moduleIndex] = {
+            ...Database.modules[moduleIndex],
             ...req.body
         };
         res.sendStatus(204);
