@@ -9,13 +9,13 @@ import AssignmentRoutes from './assignments/routes.js';
 import mongoose from "mongoose";
 import UserRoutes from "./users/routes.js";
 
-mongoose.connect("mongodb://127.0.0.1:27017/kanbas");
+mongoose.connect(process.env.DB_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas");
 
-const app = express()
-console.log(process.env.FRONTEND_URL);
-app.use(
-    cors()
-);
+const app = express();
+app.use(cors());
+app.use(express.json());
+UserRoutes(app);
+
 
 app.use(express.json());
 UserRoutes(app);
@@ -24,5 +24,5 @@ ModuleRoutes(app);
 CourseRoutes(app);
 Lab5(app)
 Hello(app)
-app.listen(4000);
 
+app.listen(process.env.PORT || 4000);
